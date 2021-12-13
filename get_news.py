@@ -4,26 +4,32 @@ URL = 'https://newsapi.org/v2/everything'
 KEY = '949120e5934548c1a41a240b23635ac8'
 
 
-class RequestNews:
+class NewsDownloader:
 
-    def __init__(self, topic):
-        self.params = {'q': topic,
+    def __init__(self, query):
+        self.params = {'q': query,
                        'apiKey': KEY,
                        'page': 1,
+                       'pageSize': '100',
                        'from': '2021-12-12',
                        'language': 'en'
                        }
 
     def query_newsapi(self):
         try:
-            responce = requests.get(url=URL, params=self.params)  # attempt a connection
+            response = requests.get(url=URL, params=self.params)  # attempt a connection
         except requests.exceptions.RequestException:
             return -1
 
-        # handle http error codes 500 or 40x
-        if str(responce.status_code).startswith('5' or '4'):
-            error_responce = responce.json()
-            return f"Status code {error_responce['']} with message: '{error_responce['message']}'"
+        if response.status_code == 200:
+            data = response.json()
+            if data['totalResults'] > 100:
+                pass
+            else:
+                return data
+        else:
+            error_response = response.json()
+            print(f"Status code {error_response['code']} with message: '{error_response['message']}'")
+            return -1
 
-        data = responce.json()  # get response's data in json format
-        return data
+    # def paginate(self):
