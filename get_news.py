@@ -1,4 +1,6 @@
 import requests
+import pandas as pd
+import sys
 
 URL = 'https://newsapi.org/v2/everything'
 KEY = '949120e5934548c1a41a240b23635ac8'
@@ -15,6 +17,15 @@ class NewsDownloader:
                        'language': 'en'
                        }
         self.paginate = paginate
+
+    def download_articles(self):
+        articles_list = self.get_articles_list()
+        if isinstance(articles_list, list):
+            articles_df = pd.DataFrame(articles_list)
+            articles_df['source_name'] = articles_df['source'].apply(lambda x: x['name'])
+            return articles_df
+        else:
+            sys.exit(-1)
 
     def get_articles_list(self):
         first_result_data = self.send_request()

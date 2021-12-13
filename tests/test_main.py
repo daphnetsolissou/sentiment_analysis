@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from main import parse_arguments, download_articles
+from main import parse_arguments
 
 
 @pytest.fixture()
@@ -15,7 +15,3 @@ def test_parse_arguments(argsparser):
     assert argsparser.query == 'brexit'
 
 
-def test_download_articles(argsparser):
-    articles = download_articles(argsparser)
-    if isinstance(articles, pd.DataFrame):
-        assert len(articles.columns) > 0
