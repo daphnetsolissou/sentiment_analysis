@@ -11,9 +11,18 @@ def parse_arguments(args):
     return parsed_args
 
 
+def report_sources():
+    pass
+
+
 def main():
     input_args = parse_arguments(sys.argv[1:])
     downloader = NewsDownloader(input_args.query)
+    articles_list = downloader.get_articles_list()
+    if isinstance(articles_list, list):
+        pass
+    else:
+        raise sys.exit(-1)
 
 
 if __name__ == "__main__":

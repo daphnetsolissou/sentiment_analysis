@@ -8,9 +8,9 @@ def downloader():
     return NewsDownloader('brexit')
 
 
-def test_query_newsapi(downloader):
-    data = downloader.query_newsapi()
-    if isinstance(data, dict):
-        assert len(data) == 3
+def test_get_articles_list(downloader):
+    data = downloader.get_articles_list()
+    if isinstance(data, list):
+        assert len(data) > 0
     else:
         assert data == -1
