@@ -17,6 +17,7 @@ def main():
     input_args = parse_arguments(sys.argv[1:])
     downloader = NewsDownloader(input_args.query)
     articles = downloader.download_articles()
+    articles.to_csv('Articles.csv', index=False, encoding='utf8')
     if len(sys.argv[1:]) == 2:
         reporter = SourcesReporter(articles)
         json = reporter.get_report_json()
