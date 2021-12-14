@@ -14,3 +14,9 @@ def test_get_articles_list(downloader):
         assert len(data) > 0
     else:
         assert data == -1
+
+
+def test_download_articles():
+    downloader = NewsDownloader('brexit', paginate=False)
+    articles = downloader.download_articles()
+    assert len(articles) > 0

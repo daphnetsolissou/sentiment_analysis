@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import sys
+import time
 
 URL = 'https://newsapi.org/v2/everything'
 KEY = '949120e5934548c1a41a240b23635ac8'
@@ -8,7 +9,7 @@ KEY = '949120e5934548c1a41a240b23635ac8'
 
 class NewsDownloader:
 
-    def __init__(self, query, paginate=False):
+    def __init__(self, query, paginate=False, sleep_time=10):
         self.params = {'q': query,
                        'apiKey': KEY,
                        'page': 1,
@@ -17,6 +18,7 @@ class NewsDownloader:
                        'language': 'en'
                        }
         self.paginate = paginate
+        self.sleep_time = sleep_time
 
     def download_articles(self):
         articles_list = self.get_articles_list()
@@ -49,7 +51,7 @@ class NewsDownloader:
             return data
         else:
             error_response = response.json()
-            print(f"Status code {error_response['code']} with message: '{error_response['message']}'")
+            print(f"Status code {error_response['code']} with message: '{error_response['message']}'\n")
             return -1
 
     def get_complete_results(self, first_result_data):
@@ -64,6 +66,8 @@ class NewsDownloader:
 
         for page in range(2, pages + 1):
             self.params['page'] = page
+            print(f'Waiting {self.sleep_time}s before next page request.\n')
+            time.sleep(self.sleep_time)
             next_page_data = self.send_request()
             if next_page_data == -1:
                 return articles
