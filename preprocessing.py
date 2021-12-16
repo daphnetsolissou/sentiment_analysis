@@ -3,6 +3,7 @@ import unidecode
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.tag import pos_tag
 
 
 class Preprocessor:
@@ -49,6 +50,17 @@ class Preprocessor:
         return filtered_text
 
     def lemmatize_words(self):
-        lemmatizer = WordNetLemmatizer()
-        words = [lemmatizer.lemmatize(w) for w in self.tokens]
+        words = []
+        for token, tag in pos_tag(self.tokens):
+            if tag.startswith("NN"):
+                pos = 'n'
+            elif tag.startswith('VB'):
+                pos = 'v'
+            else:
+                pos = 'a'
+
+            lemmatizer = WordNetLemmatizer()
+            token = lemmatizer.lemmatize(token, pos)
+            words.append(token)
         return words
+
