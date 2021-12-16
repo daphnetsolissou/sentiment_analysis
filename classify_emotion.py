@@ -6,14 +6,11 @@ import tensorflow as tf
 import numpy as np
 
 
-ROOT_DIR = os.path.dirname(os.getcwd())
-
-
 class Classifier:
     def __init__(self, data, model='bayes'):
         self.data = data.copy()
         self.model_name = model
-        self.models_path = os.path.join(ROOT_DIR, 'models')
+        self.models_path = os.path.join(os.getcwd(), 'models')
 
     def perform_predictions(self):
         input_data = self.prepare_dataset()
@@ -36,8 +33,8 @@ class Classifier:
         vocab_path = os.path.join(self.models_path, 'multinomial_nb_vocabulary.pkl')
         learnt_vocabulary = pkl.load(open(vocab_path, 'rb'))
         vectorizer = CountVectorizer(vocabulary=learnt_vocabulary)
-        X = vectorizer.fit_transform(corpus)
-        return X
+        x = vectorizer.fit_transform(corpus)
+        return x
 
     def load_model(self):
         if self.model_name == 'bayes':

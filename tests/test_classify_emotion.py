@@ -4,6 +4,8 @@ import pandas as pd
 import os
 
 ROOT_DIR = os.path.dirname(os.getcwd())
+old_dir = os.getcwd()
+os.chdir(ROOT_DIR)
 
 
 @pytest.fixture()
