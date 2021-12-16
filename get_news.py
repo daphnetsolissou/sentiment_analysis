@@ -9,12 +9,12 @@ KEY = '949120e5934548c1a41a240b23635ac8'
 
 class NewsDownloader:
 
-    def __init__(self, query, paginate=False, sleep_time=10):
+    def __init__(self, query, paginate=False, sleep_time=10, year='2021'):
         self.params = {'q': query,
                        'apiKey': KEY,
                        'page': 1,
                        'pageSize': 100,
-                       'from': '2021-12-12',
+                       'from': f'{year}-11-16',
                        'language': 'en'
                        }
         self.paginate = paginate

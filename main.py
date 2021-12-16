@@ -14,13 +14,22 @@ def parse_arguments(args):
     parser.add_argument("--methodA", help='Perform sentiment analysis using Deep Neural Network', action="store_true")
     parser.add_argument("--methodB", help='Perform sentiment analysis using Multinomial Naive Bayes',
                         action="store_true")
+    parser.add_argument("--year", type=int, help='Restrict results by year')
     parsed_args = parser.parse_args(args)
     return parsed_args
 
 
 def main():
     input_args = parse_arguments(sys.argv[1:])
-    downloader = NewsDownloader(input_args.query)
+    if input_args.year:
+        year_arg = sys.argv[-1]
+        if year_arg.find('=') > -1:
+            year = year_arg.split('=')[1]
+        else:
+            year = str(year_arg)
+    else:
+        year = '2021'
+    downloader = NewsDownloader(input_args.query, year=year)
     articles = downloader.download_articles()
     # articles.to_csv('Articles.csv', index=False, encoding='utf8')
     if input_args.sentiment:
