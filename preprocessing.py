@@ -4,14 +4,19 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.tag import pos_tag
+import sys
 
 
 class Preprocessor:
     def __init__(self, input_text):
-        self.input_text = input_text
-        self.text_cleaned = self.clean_text()
-        self.tokens = self.remove_stopwords()
-        self.result_words = self.lemmatize_words()
+        if isinstance(input_text, str):
+            self.input_text = input_text
+            self.text_cleaned = self.clean_text()
+            self.tokens = self.remove_stopwords()
+            self.result_words = self.lemmatize_words()
+        else:
+            print('Wrong input for preprocessing. Requires string object.\n')
+            sys.exit(-1)
 
     def get_preprocessed_list_words(self):
         return self.result_words
