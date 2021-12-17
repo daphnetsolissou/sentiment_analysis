@@ -3,8 +3,6 @@ import sys
 from get_news import NewsDownloader
 from report_sources import SourcesReporter
 from report_sentiment import SentimentReporter
-import pandas as pd
-
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -47,6 +45,7 @@ def report_sentiment(is_methodb, articles, save_results_csv=False, query=''):
         reporter = SentimentReporter(articles, model_name='dnn', save_classified_df=save_results_csv, topic=query)
     results = reporter.get_report_string()
     print(results)
+    return results
 
 
 def report_sources(articles, input_args):
@@ -54,15 +53,17 @@ def report_sources(articles, input_args):
         reporter = SourcesReporter(articles)
         json = reporter.get_report_json()
         print(json)
+        return json
+    return ''
 
 
 def main():
     input_args = parse_arguments(sys.argv[1:])
     year = parse_year_option(input_args)
-    articles = download_news(input_args.query, year=year, save_results_csv=True)
+    articles = download_news(input_args.query, year=year, save_results_csv=False)
 
     if input_args.sentiment:
-        report_sentiment(is_methodb=input_args.methodB, articles=articles, save_results_csv=True,
+        report_sentiment(is_methodb=input_args.methodB, articles=articles, save_results_csv=False,
                          query=input_args.query)
     else:
         report_sources(articles, input_args)
