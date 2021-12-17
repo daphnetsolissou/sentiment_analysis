@@ -46,6 +46,7 @@ class NewsDownloader:
             articles_df['source_name'] = articles_df['source'].apply(lambda x: x['name'])
             return articles_df
         else:
+            print('Could not download news. Exiting...\n')
             sys.exit(-1)
 
     def get_articles_list(self):
@@ -63,6 +64,8 @@ class NewsDownloader:
         try:
             response = requests.get(url=URL, params=self.params)  # attempt a connection
         except requests.exceptions.RequestException:
+            print("A RequestException occurred. Could not connect to the server. "
+                  "Maybe check your connection or your request parameters?\n")
             return -1
 
         if response.status_code == 200:
