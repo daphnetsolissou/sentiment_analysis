@@ -10,9 +10,18 @@ int_to_label = {0: "sadness",
 
 
 class SentimentReporter:
-    def __init__(self, articles_df, model_name='bayes'):
+    def __init__(self, articles_df, model_name='bayes', save_classified_df=False, topic=''):
         self.df = articles_df
         self.model_name = model_name
+        self.save_results = save_classified_df
+        self.topic = topic
+        self.inform_about_classifier_method()
+
+    def inform_about_classifier_method(self):
+        if self.model_name == 'bayes':
+            print("\n You selected the Multinomial Naive Bayes model to perform Emotion Detection.\n")
+        else:
+            print("\n You selected the Deep Neural Network model to perform Emotion Detection.\n")
 
     def get_report_string(self):
         df_with_predictions = self.add_predictions()
@@ -37,6 +46,9 @@ class SentimentReporter:
         new_df = self.df.copy()
         new_df['predictions'] = predictions
         new_df['predictions'] = new_df['predictions'].apply(lambda x: int_to_label[x])
+
+        if self.save_results:
+            new_df.to_csv(f'{self.topic}_classified_news_{self.model_name}.csv', encoding='utf8')
         return new_df
 
     @staticmethod
