@@ -1,0 +1,4 @@
+/virtualenv-dafnitsolisou/
+*.csv
+.idea/
+__pycache__/
