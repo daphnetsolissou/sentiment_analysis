@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import sys
 import time
+from datetime import datetime
 
 URL = 'https://newsapi.org/v2/everything'
 KEY = '949120e5934548c1a41a240b23635ac8'
@@ -10,15 +11,33 @@ KEY = '949120e5934548c1a41a240b23635ac8'
 class NewsDownloader:
 
     def __init__(self, query, paginate=False, sleep_time=10, year='2021'):
+        self.year = year
+        date_from, date_to = self.create_from_to_dates()
         self.params = {'q': query,
                        'apiKey': KEY,
                        'page': 1,
                        'pageSize': 100,
-                       'from': f'{year}-11-16',
+                       'from': date_from,
+                       'to': date_to,
                        'language': 'en'
                        }
         self.paginate = paginate
         self.sleep_time = sleep_time
+
+    def create_from_to_dates(self):
+        today = datetime.today().strftime('%Y-%m-%d')
+        try:
+            if int(self.year) >= 2021:
+                date_from = '2021-12-01'
+                date_to = today
+            else:
+                date_from = f'{str(self.year)}-01-01'
+                date_to = f'{str(self.year)}-12-31'
+        except TypeError:
+            print('Invalid input for year. Using default values\n')
+            return '2021-11-16', today
+
+        return date_from, date_to
 
     def download_articles(self):
         articles_list = self.get_articles_list()
