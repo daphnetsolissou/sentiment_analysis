@@ -14,13 +14,21 @@ class SentimentReporter:
         self.df = articles_df
         self.model_name = model_name
 
+    def get_report_string(self):
+        self.add_predictions()
+        emotions_dict = self.calculate_percentage_per_emotion()
+        report_string = '\n'
+        for key, value in emotions_dict.items():
+            report_string = report_string + f'{key} {value}\n'
+        return report_string
+
     def add_predictions(self):
-        classifier = Classifier(self.df.copy(), model=self.model_name)
+        classifier = Classifier(self.df.copy(), model_name=self.model_name)
         predictions = classifier.perform_predictions()
         self.df['predictions'] = predictions
         self.df['predictions'] = self.df['predictions'].apply(lambda x: int_to_label[x])
 
-    def percentage_per_emotion(self):
+    def calculate_percentage_per_emotion(self):
         count_emotions = self.df['predictions'].value_counts()
         emotions_dict = {}
         for index, value in count_emotions.items():
@@ -28,10 +36,3 @@ class SentimentReporter:
             emotions_dict[f'{emotion_percentage} %'] = index
         return emotions_dict
 
-    def get_report_string(self):
-        self.add_predictions()
-        emotions_dict = self.percentage_per_emotion()
-        report_string = '\n'
-        for key, value in emotions_dict.items():
-            report_string = report_string + f'{key} {value}\n'
-        return report_string
