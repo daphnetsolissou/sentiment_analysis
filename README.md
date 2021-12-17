@@ -48,7 +48,8 @@ I trained two models using the emotions dataset, a Multinomial Naive Bayes model
 Bag-of-Words features extraction technique was used for the training of both models.
 
 The Multinomial NB model achieved train accuracy = 0.87 and test accuracy = 0.7668 on the training/test sets. The 
-DNN model achieved train accuracy = 0.94 and test accuracy = 0.84, using also a validation split and batch size of 1024.
+DNN model achieved train accuracy = 0.94 and test accuracy = 0.84, using also a validation split of 0.3 and a 
+batch size of 1024.
 
 More complex models using BERT, BiDirectional LSTMs could perform better on this task but they require a lot of time to 
 train. If I wasn't time restricted I would attempt to try those models.
