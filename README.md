@@ -1,13 +1,10 @@
-# Sentiment Task
+# How does the world feel?
 
-This is a project that performs Emotion Detection on news articles downloaded from the https://newsapi.org API using two
-different methods. 
-
-The available methods are a Multinomial Naive Bayes model and a Deep Neural Network model trained on an emotion dataset.
+This is a project that performs Emotion Detection on news articles. The https://newsapi.org API is used as a data source and the emotion detection is performed using two models. A Multinomial Naive Bayes model and a Deep Neural Network model were trained on an emotion training dataset.
 
 
 # Install Requirements
-The project is built using a clean venv of Python 3.9.0.
+A clean venv of Python 3.9.0 is recommended.
 
 Begin by installing the required packages with the command:
 ```bash
@@ -26,14 +23,9 @@ python main.py topic 'christmas' --year=2021 # a temporal restriction is also av
 
 # Restrictions
 
-1) The news API restricted me from downloading more than one pages containing 100 results for a request. This is why
-the pagination option is available but by default deactivated.
+1) The news API free api key allowd requests of the first page only with 100 results. This is why the pagination option is available but by default deactivated.
 
-2) Also because of the free plan I was not able to download articles past a month before my subscription. This is why the 
-year restriction for 2021 is limited to December 2021. For paid plan thought past year can be accessed.
-
-3) Since the downloaded data are limited to 100 each time they can fit in memory. This is why they are kept in memory as a
-dataframe and not stored in a database.
+2) The free plan limits historical data search to one month before today.
    
 # Emotion Dataset 
 
@@ -50,6 +42,3 @@ Bag-of-Words features extraction technique was used for the training of both mod
 The Multinomial NB model achieved train accuracy = 0.87 and test accuracy = 0.7668 on the training/test sets. The 
 DNN model achieved train accuracy = 0.94 and test accuracy = 0.84, using also a validation split of 0.3 and a 
 batch size of 1024.
-
-More complex models using BERT, BiDirectional LSTMs could perform better on this task but they require a lot of time to 
-train. If I wasn't time restricted I would attempt to try those models.
