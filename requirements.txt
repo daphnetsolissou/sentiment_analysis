@@ -8,3 +8,4 @@ tensorflow~=2.7.0
 numpy~=1.21.4
 sklearn~=0.0
 scikit-learn~=1.0.1
+python-dotenv~=0.19.2

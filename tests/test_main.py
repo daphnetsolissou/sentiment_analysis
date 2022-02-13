@@ -38,37 +38,37 @@ def test_report_sentiment():
     os.chdir(ROOT_DIR)
     args_list = parse_arguments(['topic', 'christmas', '--sentiment'])
     articles = download_news('christmas', '2021')
-    emotions = report_sentiment(args_list.methodB, articles)
+    emotions = report_sentiment(args_list.dnn, articles)
     os.chdir(old_dir)
     assert len(emotions) > 1
 
 
-def test_report_sentiment_methodB():
+def test_report_sentiment_mnb():
     old_dir = os.getcwd()
     os.chdir(ROOT_DIR)
-    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--methodB'])
+    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--mnb'])
     articles = download_news('christmas', '2021')
-    emotions = report_sentiment(args_list.methodB, articles)
+    emotions = report_sentiment(args_list.mnb, articles)
     os.chdir(old_dir)
     assert len(emotions) > 1
 
 
-def test_report_sentiment_methodA():
+def test_report_sentiment_dnn():
     old_dir = os.getcwd()
     os.chdir(ROOT_DIR)
-    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--methodA'])
+    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--dnn'])
     articles = download_news('christmas', '2021')
-    emotions = report_sentiment(args_list.methodB, articles)
+    emotions = report_sentiment(args_list.dnn, articles)
     os.chdir(old_dir)
     assert len(emotions) > 1
 
 
-def test_report_sentiment_methodA_year():
+def test_report_sentiment_dnn_year():
     old_dir = os.getcwd()
     os.chdir(ROOT_DIR)
-    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--methodA', '--year=2021'])
+    args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--dnn', '--year=2021'])
     articles = download_news('christmas', '2021')
-    emotions = report_sentiment(args_list.methodB, articles)
+    emotions = report_sentiment(args_list.dnn, articles)
     os.chdir(old_dir)
     assert len(emotions) > 1
 
@@ -78,6 +78,6 @@ def test_report_sentiment_year():
     os.chdir(ROOT_DIR)
     args_list = parse_arguments(['topic', 'christmas', '--sentiment', '--year=2021'])
     articles = download_news('christmas', '2021')
-    emotions = report_sentiment(args_list.methodB, articles)
+    emotions = report_sentiment(args_list.dnn, articles)
     os.chdir(old_dir)
     assert len(emotions) > 1

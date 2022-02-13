@@ -2,16 +2,29 @@ import requests
 import pandas as pd
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
+from dotenv import dotenv_values
+import os
 
+root_dir = os.path.dirname(__file__)
+print(f'My root {root_dir}')
+config = dotenv_values(os.path.join(root_dir, ".env"))
 URL = 'https://newsapi.org/v2/everything'
-KEY = '949120e5934548c1a41a240b23635ac8'
+try:
+    KEY = config['API_KEY']
+except KeyError:
+    print("Provide a .env file with the API_KEY.")
+    sys.exit()
 
 
 class NewsDownloader:
 
-    def __init__(self, query, paginate=False, sleep_time=10, year='2021'):
+    def __init__(self, query, paginate=False, sleep_time=10, year=None):
+        if year is None:
+            year = datetime.today().year
         self.year = year
+        self.paginate = paginate
+        self.sleep_time = sleep_time
         date_from, date_to = self.create_from_to_dates()
         self.params = {'q': query,
                        'apiKey': KEY,
@@ -21,21 +34,24 @@ class NewsDownloader:
                        'to': date_to,
                        'language': 'en'
                        }
-        self.paginate = paginate
-        self.sleep_time = sleep_time
 
     def create_from_to_dates(self):
         today = datetime.today().strftime('%Y-%m-%d')
+        one_month_before = (datetime.today() - timedelta(days=30)).strftime('%Y-%m-%d')
         try:
-            if int(self.year) >= 2021:
-                date_from = '2021-12-01'
-                date_to = today
-            else:
+            past_year = (int(self.year) < datetime.today().year)
+            if self.paginate and past_year:
                 date_from = f'{str(self.year)}-01-01'
                 date_to = f'{str(self.year)}-12-31'
+            else:
+                date_to = today
+                if self.paginate:
+                    date_from = f'{str(self.year)}-01-01'
+                else:
+                    date_from = one_month_before
         except TypeError:
-            print('Invalid input for year. Using default values\n')
-            return '2021-11-16', today
+            print(f'Invalid input for year. Using date range {one_month_before}-{today}.\n')
+            return one_month_before, today
 
         return date_from, date_to
 

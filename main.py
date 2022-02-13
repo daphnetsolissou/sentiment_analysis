@@ -12,8 +12,8 @@ def parse_arguments(args):
     parser.add_argument("topic", type=str, help='Argument topic is required')
     parser.add_argument("query", type=str, help='Type a topic to search for in the newsapi')
     parser.add_argument("--sentiment", help='Perform sentiment analysis', action="store_true")
-    parser.add_argument("--methodA", help='Perform sentiment analysis using Deep Neural Network', action="store_true")
-    parser.add_argument("--methodB", help='Perform sentiment analysis using Multinomial Naive Bayes',
+    parser.add_argument("--dnn", help='Perform sentiment analysis using Deep Neural Network', action="store_true")
+    parser.add_argument("--mnb", help='Perform sentiment analysis using Multinomial Naive Bayes',
                         action="store_true")
     parser.add_argument("--year", type=str, help='Restrict results by year')
     parsed_args = parser.parse_args(args)
@@ -63,7 +63,7 @@ def main():
     articles = download_news(input_args.query, year=year, save_results_csv=False)
 
     if input_args.sentiment:
-        report_sentiment(is_methodb=input_args.methodB, articles=articles, save_results_csv=False,
+        report_sentiment(is_methodb=input_args.mnb, articles=articles, save_results_csv=False,
                          query=input_args.query)
     else:
         report_sources(articles, input_args)
