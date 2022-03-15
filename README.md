@@ -1,4 +1,4 @@
-# How does the world feel?
+# Live News Emotion Detection
 
 In this project the goal is to perform Emotion Detection on news articles that are downloaded in real time. 
 To do that I used the https://newsapi.org which provides a free licence for trial. 
@@ -16,7 +16,7 @@ After setting up your environment you can install the required packages using th
 pip install -r requirements.txt
 ```
 
-# Available commands
+# Available Commands
 To see the project in action you can try the available commands:
 
 ```bash
@@ -39,7 +39,7 @@ https://www.kaggle.com/parulpandey/emotion-dataset.
 
 The training dataset comprises six different classes: sadness, joy, love, anger, fear and surprise.
    
-# Trained models
+# Trained Models
 
 I trained two models using the above mentioned emotion dataset, a Multinomial Naive Bayes model and a Deep Neural Network. The 
 Bag-of-Words features extraction technique was used for the training of both models.
